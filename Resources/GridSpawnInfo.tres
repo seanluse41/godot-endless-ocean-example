@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://knjn32utk7xn"]
+
+[ext_resource type="Script" path="res://Resources/GridSpawnInfo.gd" id="1_hkn3e"]
+
+[resource]
+script = ExtResource("1_hkn3e")
+spawnPoints = Array[Vector2]([])
+subdivision = Array[int]([])
+scale = Array[int]([])

@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbrx5kepr4uiq"]
+[gd_scene load_steps=12 format=3]
 
-[ext_resource type="Shader" path="res://assets/Shaders/WaterPlane.gdshader" id="1_fwwba"]
+[ext_resource type="Shader" path="res://Shaders/WaterPlane.gdshader" id="1_fwwba"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4rtgx"]
 noise_type = 3
