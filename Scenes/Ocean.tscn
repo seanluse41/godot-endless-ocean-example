@@ -1,6 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxdhsov6y3q4j"]
+[gd_scene load_steps=6 format=3 uid="uid://cxdhsov6y3q4j"]
 
 [ext_resource type="Script" path="res://Scenes/Ocean.gd" id="1_t36og"]
+[ext_resource type="PackedScene" uid="uid://d1qug6i05r8h5" path="res://Scenes/player.tscn" id="2_grvrn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_065qn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sun_angle_max = 154.7
+
+[sub_resource type="Sky" id="Sky_cvvey"]
+sky_material = SubResource("ProceduralSkyMaterial_065qn")
+
+[sub_resource type="Environment" id="Environment_i1hu3"]
+background_mode = 2
+sky = SubResource("Sky_cvvey")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
 
 [node name="Ocean" type="Node3D"]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0)
 script = ExtResource("1_t36og")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i1hu3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.144337, -0.0829507, 0.0079819, 0, 0.0957821, 0.995402, -0.0833339, 0.143674, -0.0138249, -75.2997, 92.4496, 0)
+light_color = Color(1, 0.847059, 0.419608, 1)
+light_energy = 1.506
+light_indirect_energy = 3.263
+light_volumetric_fog_energy = 3.263
+light_angular_distance = 23.64
+shadow_enabled = true
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_grvrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123278, 2.75969, 0.141528)

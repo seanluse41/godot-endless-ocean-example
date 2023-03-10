@@ -1,5 +1,6 @@
 shader_type spatial;
 
+global uniform vec3 ocean_pos; // Global shader value for the player position
 uniform vec3 albedo : source_color = vec3(0.0,0.32,0.43);
 uniform vec3 albedo2 : source_color = vec3(0.0,0.47,0.76);
 uniform float metallic : hint_range(0.0, 1.0) = 0;
@@ -31,6 +32,9 @@ uniform vec3 edge_color : source_color = vec3(1.0,1.0,1.0);
 // Varying variables
 varying float height;
 varying vec3 world_pos;
+varying float vertex_distance;
+varying float vertex_distance_clamped;
+varying vec2 vertex_pos;
 
 float fresnel(float amount, vec3 normal, vec3 view)
 {
@@ -62,9 +66,28 @@ float waveheight(vec2 offset, int mode) {
 }
 
 void vertex() {
+	float prev_height_x = waveheight(vec2(-0.3,0.0),2);
+	float next_height_x = waveheight(vec2(0.3,0.0),2);
+	float prev_height_y = waveheight(vec2(0.0,-0.3),2);
+	float next_height_y = waveheight(vec2(0.0,0.3),2);
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vertex_distance = distance(world_pos, ocean_pos);
+	vertex_distance = clamp(vertex_distance, 0.0, 85.0);
+	vertex_distance_clamped = vertex_distance / 85.0;
 	float height_mix = waveheight(vec2(0.0,0.0),2);
-	VERTEX.y += height_mix * height_scale;
+	VERTEX.y += height_mix * height_scale * (1.0 - vertex_distance_clamped);
+	float fraction_x = fract(round(UV.x * 1000.0) / 10.0);
+	float fraction_y = fract(round(UV.y * 1000.0) / 10.0);
+	if (fraction_x != 0.0) {
+		if (fract(UV.y) == 0.0) {
+			VERTEX.y = ((prev_height_x + next_height_x) * height_scale * (1.0 - vertex_distance_clamped)) / 2.0;
+		}
+	}
+	if (fraction_y != 0.0) {
+		if (fract(UV.x) == 0.0) {
+			VERTEX.y = ((prev_height_y + next_height_y) * height_scale * (1.0 - vertex_distance_clamped)) / 2.0;
+		}
+	}
 }
 
 void fragment() {
@@ -90,7 +113,7 @@ void fragment() {
 	vec2 time2 = (TIME * wave_direction2) * time_scale; // Movement rate of second wave
 	
 	// Blend normal maps into one
-	vec3 normal_blend = mix(texture(texture_normal,world_pos.xz + time).rgb, texture(texture_normal2,world_pos.xz + time2).rgb, 0.5);
+	vec3 normal_blend = mix(texture(texture_normal,world_pos.xz / 10.0 + time / 10.0).rgb, texture(texture_normal2,world_pos.xz / 10.0 + time2 / 10.0).rgb, 0.5);
 	
 	// Blend Wave1 and Wave2 maps
 	vec3 wave_normal_blend = mix(texture(wave_bump, world_pos.xz / noise_scale + time).xyz,texture(wave_bump, world_pos.xz / noise_scale + time2).xyz,0.3);

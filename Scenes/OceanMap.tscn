@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://4n3jgpupr5ye"]
+[gd_scene load_steps=3 format=3 uid="uid://4n3jgpupr5ye"]
+
+[ext_resource type="PackedScene" uid="uid://cxdhsov6y3q4j" path="res://Scenes/Ocean.tscn" id="1_it06w"]
+[ext_resource type="PackedScene" uid="uid://d1qug6i05r8h5" path="res://Scenes/player.tscn" id="2_d0iah"]
 
 [node name="OceanMap" type="Node3D"]
+
+[node name="Ocean" parent="." instance=ExtResource("1_it06w")]
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_d0iah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26427, 1.92582, 1.14244)

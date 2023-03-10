@@ -2,6 +2,15 @@
 
 extends Node3D
 
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("quit"):
+		get_tree().quit()
+
+func _process(delta):
+	RenderingServer.global_shader_parameter_set("ocean_pos", self.position); # Update global shader parameter 'ocean_pos' to match the ocean node position
+
 # Get waterplane and preset grid spawn info
 var OceanTile = preload("res://Scenes/WaterPlane.tscn");
 var spawnPoint = preload("res://Resources/GridSpawnInfo.tres");

@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_hkn3e")
-spawnPoints = Array[Vector2]([])
-subdivision = Array[int]([])
-scale = Array[int]([])
+spawnPoints = Array[Vector2]([Vector2(0, 0), Vector2(-1, -1), Vector2(-1, 0), Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(1, -1), Vector2(0, -1), Vector2(-3, -3), Vector2(-3, 0), Vector2(-3, 3), Vector2(0, 3), Vector2(3, 3), Vector2(3, 0), Vector2(3, -3), Vector2(0, -3)])
+subdivision = Array[int]([199, 99, 99, 99, 99, 99, 99, 99, 99, 0, 0, 0, 0, 0, 0, 0, 0])
+scale = Array[int]([1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3])
